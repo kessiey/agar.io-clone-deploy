@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agario
+  namespace: agar-kessie
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: agario
+  template:
+    metadata:
+      labels:
+        name: agario
+    spec:
+      containers:
+        - name: agario
+          image: kessie/agar-kessie
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agario
+  namespace: agar-kessie
+spec:
+  selector:
+    name: agario
+  ports:
+    - port: 3000
+      targetPort: 3000
+
